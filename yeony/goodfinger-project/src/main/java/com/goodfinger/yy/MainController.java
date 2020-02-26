@@ -1,5 +1,6 @@
 package com.goodfinger.yy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,11 +20,22 @@ public class MainController {
 //		System.out.println("여기 오는지 테스으");
 //        return new ModelAndView("index/index");
 //    }
+
+	@Autowired
+	private UserRepository repository;
+	
 	@CrossOrigin(origins = "*")
 	@GetMapping("yy")
     public String root_test() throws Exception{
 		System.out.println("yytest Success.");
-        return "hello-world. ";
+
+		String userData = "";
+		for (com.goodfinger.yy.User user : repository.findAll()) {
+	      System.out.println(user.toString());
+	      userData += user.toString();
+	    }
+		
+        return userData;
     }
 	
 	@RequestMapping("getparam")
@@ -32,7 +44,4 @@ public class MainController {
 		String resultName = "name is " + name;
 		return resultName;
 	}
-	
-
-
 }
