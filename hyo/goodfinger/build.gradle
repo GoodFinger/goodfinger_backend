@@ -54,3 +54,9 @@ asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.backend.goodfinger.GoodfingerApplication'
+    }
+}
