@@ -1,8 +1,13 @@
 spring:
   profiles:
-    active: localServer
+    active: server
   jwt:
     secret: goodFinger!@#
+
+logging:
+  level:
+    root: info
+    com.backend.goodfinger: debug
 
 # local
 ---

@@ -1,6 +1,5 @@
 package com.backend.goodfinger.user;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

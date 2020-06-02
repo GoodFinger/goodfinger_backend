@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 @RestController
 public class SignController {
@@ -27,22 +30,30 @@ public class SignController {
         logger.debug("signUp started.");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(user.isBoss() ? new ArrayList<>(Arrays.asList("boss")) : new ArrayList<>(Arrays.asList("user")));
         userRepository.insert(user);
 
         logger.debug("signUp ended.");
 
-        return new ResponseEntity<>("user added successfully.", HttpStatus.OK);
+        return new ResponseEntity<>(jwtTokenProvider.createToken(user.getEmail(), user.getRoles()), HttpStatus.CREATED);
     }
 
     @PostMapping("/signIn")
     public ResponseEntity<?> signIn(@RequestBody User user) throws Exception {
-        //TODO role은??
         User member = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+                .orElseThrow(() -> new LoginExceptionHandler.UnauthorizedException("가입되지 않은 E-MAIL 입니다."));
+
         if (!passwordEncoder.matches(user.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+            new LoginExceptionHandler.UnauthorizedException("잘못된 비밀번호입니다.");
         }
 
         return new ResponseEntity<>(jwtTokenProvider.createToken(member.getEmail(), member.getRoles()), HttpStatus.OK);
+    }
+
+    @PostMapping("/logOut")
+    public ResponseEntity<?> logOut(@RequestBody User user) throws Exception {
+        //TODO 들어오면 blacklist에 만료된 목록 넣어두고 체크
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,8 +1,6 @@
-package com.backend.goodfinger.login;
+package com.backend.goodfinger.user;
 
 import com.backend.goodfinger.auth.JwtTokenProvider;
-import com.backend.goodfinger.user.User;
-import com.backend.goodfinger.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
