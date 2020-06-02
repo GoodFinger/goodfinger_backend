@@ -1,4 +1,4 @@
-package com.goodFinger.goodFingerNotice;
+package com.goodFinger.goodFingerAnnouncementApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

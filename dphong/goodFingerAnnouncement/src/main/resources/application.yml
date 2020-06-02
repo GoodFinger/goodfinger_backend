@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: server
 
 # local
 ---
@@ -38,8 +38,8 @@ spring:
   profiles: server
   data:
     mongodb:
-      host: 127.0.0.1
+      host: mongo
       port: 27017
-      database: admin
+      database: goodFinger
       username: dphong
       password: 1234

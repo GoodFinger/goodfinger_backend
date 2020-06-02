@@ -1,6 +1,12 @@
-package com.goodfinger.yy;
+package com.goodfinger.yy.contoller;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,10 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.goodfinger.yy.repository.User;
+import com.goodfinger.yy.repository.UserRepository;
+
 
 @RestController
-//@Controller("index")
 @RequestMapping("/")
 public class MainController {
 	
@@ -26,21 +34,23 @@ public class MainController {
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping("yy")
-    public String root_test() throws Exception{
+    public ResponseEntity root_test() throws Exception{
 		System.out.println("yytest Success.");
 
 		String userData = "";
-		for (com.goodfinger.yy.User user : repository.findAll()) {
+		List<User> userData2 = repository.findAll();
+		for (User user : repository.findAll()) {
 	      System.out.println(user.toString());
 	      userData += user.toString();
 	    }
-		
-        return userData;
+		System.out.println();
+		System.out.println(repository.findByName("예연2"));
+		return new ResponseEntity(userData2, HttpStatus.OK);
     }
 	
 	@RequestMapping("getparam")
 	public String getparam(Model model, @RequestParam (value = "name") String name) throws Exception{
-		
+		Logger log = LoggerFactory.getLogger(MainController.class);
 		String resultName = "name is " + name;
 		return resultName;
 	}

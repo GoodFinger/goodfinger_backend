@@ -1,4 +1,4 @@
-package com.goodfinger.yy;
+package com.goodfinger.yy.repository;
 
 
 import java.util.List;

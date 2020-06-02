@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.apache.catalina.Group;
 import org.apache.catalina.Role;
-import org.apache.catalina.User;
 import org.apache.catalina.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+
+import com.goodfinger.yy.repository.User;
+import com.goodfinger.yy.repository.UserRepository;
 
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @SpringBootApplication(exclude = {
@@ -34,7 +36,7 @@ public class GoodfingerProjectApplication implements CommandLineRunner{
 		
 		System.out.println(repository.count());
 		System.out.println("-------------------------------");
-		for (com.goodfinger.yy.User user : repository.findAll()) {
+		for (User user : repository.findAll()) {
 	      System.out.println(user.toString());
 	    }
 		System.out.println("Users found with findAll();");
