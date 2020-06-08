@@ -12,7 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -41,10 +44,10 @@ public class SignController {
     @PostMapping("/signIn")
     public ResponseEntity<?> signIn(@RequestBody User user) throws Exception {
         User member = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new LoginExceptionHandler.UnauthorizedException("가입되지 않은 E-MAIL 입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "can't not found :: " + user.getEmail()));
 
         if (!passwordEncoder.matches(user.getPassword(), member.getPassword())) {
-            new LoginExceptionHandler.UnauthorizedException("잘못된 비밀번호입니다.");
+            new ResponseStatusException(HttpStatus.UNAUTHORIZED, "no matching userInfo");
         }
 
         return new ResponseEntity<>(jwtTokenProvider.createToken(member.getEmail(), member.getRoles()), HttpStatus.OK);
