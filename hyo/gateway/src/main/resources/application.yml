@@ -1,0 +1,29 @@
+
+server:
+    port: 8080
+
+logging:
+    level:
+        root: info
+        org.springframework.web: debug
+        com.backend.goodfinger: info
+
+zuul:
+    routes:
+        oauth:
+            path: /oauth/**
+            url: http://localhost:8081/spring-security-oauth-server/oauth
+        hyoji-service:
+            path: /hyoji/**
+            serviceId: hyoji-service
+
+spring:
+    application:
+        name: zuul
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://localhost:8761/eureka/

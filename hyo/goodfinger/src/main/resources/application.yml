@@ -1,6 +1,8 @@
 spring:
+  application:
+    name: hyoji-service
   profiles:
-    active: server
+    active: local
   jwt:
     secret: goodFinger!@#
 
@@ -9,10 +11,17 @@ logging:
     root: info
     com.backend.goodfinger: debug
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
 # local
 ---
 server:
-  port: 8080
+  port: 8081
 spring:
   profiles: local
   data:

@@ -52,6 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/signIn", "/signUp", "/logOut").permitAll()
                 .antMatchers("/user/*").permitAll()
+                .antMatchers("/user/*").permitAll()
 //                .anyRequest().hasRole("boss")
                 .anyRequest().hasRole("user")
                 .and()
